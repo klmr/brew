@@ -67,22 +67,22 @@ brewFindDelim <- function(line, delim, opening = TRUE) {
 
 `.brew.cached` <- function(output=stdout(),envir=parent.frame()){
 	# Only sink if caller passed an argument
-	sunk <- FALSE
+	sunk = FALSE
 	if (!missing(output)) {
-		sunk <- TRUE
+		sunk = TRUE
 		sink(output)
 	}
 
-	text <- get('text')
-	brew.cat <- function(from,to) cat(text[from:to],sep='',collapse='')
-	.prev.brew.cat <- NULL
+	text = get('text')
+	brew.cat = function(from,to) cat(text[from:to],sep='',collapse='')
+	.prev.brew.cat = NULL
 	if (exists('.brew.cat',envir=envir)){
-		.prev.brew.cat <- get('.brew.cat',pos=envir)
+		.prev.brew.cat = get('.brew.cat',pos=envir)
 	}
 	assign('.brew.cat',brew.cat, envir=envir)
 
-	code <- get('code')
-	ret <- try(eval(code,envir=envir))
+	code = get('code')
+	ret = try(eval(code,envir=envir))
 
 	# sink() will warn if trying to end the real stdout diversion
 	if (sunk && unclass(output) != 1) sink()
